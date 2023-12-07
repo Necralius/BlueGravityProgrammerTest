@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(InputManager), typeof(Animator))]
-public class Controller_TopDown : MonoBehaviour
+public class ControllerTopDown : MonoBehaviour
 {
     //Direct Dependencies
     private Rigidbody2D      _rb                    => GetComponent<Rigidbody2D>();
@@ -18,6 +18,7 @@ public class Controller_TopDown : MonoBehaviour
 
     //Private Data
     private Vector2 _lastInput          = new Vector2(0, -1);
+    private Vector3 _startScale = new Vector3(1, 1, 1);
     private float _targetMovementSpeed  = 5f;
 
     //Inspector Assigned Data
@@ -37,6 +38,11 @@ public class Controller_TopDown : MonoBehaviour
 
     //[SerializeField] private GunBase _equippedGun = null;
 
+    private void Awake()
+    {
+        _startScale = transform.localScale;
+    }
+
     private void Update()
     {
         PlayerStateManagement();
@@ -44,13 +50,14 @@ public class Controller_TopDown : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameController.Instance.inventoryOpen || GameController.Instance.isPaused) return;
         MovementCalculation();
     }
 
      //----------------------------------------------------------------------
      // Name: MovementCalculation (Method)
      // Desc: This method calculates the player movement and applies it on the
-     //      character rigidbody.
+     //       character rigidbody.
      //----------------------------------------------------------------------
     private void MovementCalculation()
     {
@@ -61,18 +68,34 @@ public class Controller_TopDown : MonoBehaviour
         _targetMovementSpeed = _inputManager.Dash ? dashSpeed : isRunning ? runSpeed : walkSpeed;
 
         //Set the movement to the rigidbody, considering the actual position and the current target speed.
-        _rb.MovePosition(_rb.position + _inputManager.Move * _targetMovementSpeed * Time.fixedDeltaTime);
+        _rb.MovePosition(_rb.position + _inputManager.Move.normalized * _targetMovementSpeed * Time.fixedDeltaTime);
     }
 
      //----------------------------------------------------------------------
      // Name: Animation Manager (Method)
      // Desc: This method manages all the animation functions, setting the
-     //      animator values and mading the needed changes in the character
-     //      sprite.
+     //       animator values and mading the needed changes in the character
+     //       sprite.
      //----------------------------------------------------------------------
     private void PlayerStateManagement()
     {
         // Input Management
+        if (_inputManager.InventoryAction.WasPressedThisFrame()) GameController.Instance.InventoryInteraction();
+        if (_inputManager.PauseMenuAction.WasPressedThisFrame()) GameController.Instance.PauseInteraction();
+
+        // Animation Management
+
+        //Set the animator values, according with the current player state.
+        _animator.SetBool(isMovingHash, isMoving);
+        _animator.SetBool(isRunningHash, isRunning);
+
+        //Stop the player if the game is paused or if the inventory is open.
+        if (GameController.Instance.isPaused || GameController.Instance.inventoryOpen)
+        {
+            isMoving    = false;
+            isRunning   = false;
+            return;
+        }
 
         //Sets the player current behavior state, using as base mainly the input.
         isMoving    = _inputManager.Move != Vector2.zero;
@@ -84,24 +107,19 @@ public class Controller_TopDown : MonoBehaviour
             else if (_inputManager.HeavyAttack) Attack(1);
         }
 
-        // Animation Management
-
-        //Set the animator values, according with the current player state.
-        _animator.SetBool(isMovingHash,  isMoving);
-        _animator.SetBool(isRunningHash, isRunning);
-
         //Detects and save the last position that the player was moving to.
         if (isMoving)
             _lastInput = _inputManager.Move;
 
         //Mirror the character sprites horizontally, simulation an flip on the character sprite.
-        if (!isAttacking) CharacterFlipHandler();
+        if (!isAttacking) 
+            CharacterFlipHandler();
     }
 
     private void CharacterFlipHandler()
     {
-        Vector3 newScale        = transform.localScale;
-        newScale.x              = _inputManager.Move.x > 0 || _lastInput.x > 0 ? 1 : -1;
+        Vector3 newScale        = _startScale;
+        newScale.x              = _inputManager.Move.x > 0 || _lastInput.x > 0 ? _startScale.x : _startScale.x * -1;
 
         transform.localScale    = newScale;
     }
@@ -117,7 +135,7 @@ public class Controller_TopDown : MonoBehaviour
     {
         _animator.SetBool(isAttackingHash, false);
 
-        isAttacking = false;
-        canAttack = true;
+        isAttacking     = false;
+        canAttack       = true;
     }
 }
