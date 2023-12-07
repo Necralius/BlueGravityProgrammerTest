@@ -37,11 +37,11 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
         parentSave = transform.parent;
         transform.SetParent(transform.root);
 
-        if (_currentSlot.item is ClothItem)
+        if (_currentSlot.item is EquipableItem)
         {
             //This statement verifies if the item dragged is and cloth item, and if it is, the cloth item is unequiped from the player.
-            ClothItem clothItem = (ClothItem)_currentSlot.item;
-            //PaperDollSystem.Instance.DequipLayer(clothItem.paperDollLayerID);
+            EquipableItem clothItem = (EquipableItem)_currentSlot.item;
+            PaperdollController.Instance.DequipCloth(clothItem);
         }
     }
 
@@ -61,10 +61,10 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
     // ----------------------------------------------------------------------
     public void OnEndDrag(PointerEventData eventData) //Method called every time that the mouse pointer ends and drag action in the object.
     {
-        //In hte method the item will return to his original position and the raycastTarget property is turned again to true.
+        //In the method the item will return to his original position and the raycastTarget property is turned again to true.
+        transform.SetParent(parentSave);
         _image.raycastTarget        = true;
         transform.localPosition     = Vector2.zero;
-        transform.SetParent(parentSave);
     }
 
     // ----------------------------------------------------------------------

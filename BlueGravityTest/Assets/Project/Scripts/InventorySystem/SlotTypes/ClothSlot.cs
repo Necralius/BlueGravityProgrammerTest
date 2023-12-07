@@ -1,3 +1,4 @@
+using NekraByte;
 using NekraliusDevelopmentStudio;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +12,6 @@ public class ClothSlot : ItemSlot
     //This code represents an cloth slot model that carries a especific add behavior. 
 
     #region - Custom Cloth Item Add -
-    public virtual void AddClothItem(ClothItem item) { } //This method carrys and cloth item add, so this way adding and not implemented void that exists with the purpose to be implemented in future classes.
+    public virtual void AddClothItem(EquipableItem item) { } //This method carrys and cloth item add, so this way adding and not implemented void that exists with the purpose to be implemented in future classes.
     #endregion
 }

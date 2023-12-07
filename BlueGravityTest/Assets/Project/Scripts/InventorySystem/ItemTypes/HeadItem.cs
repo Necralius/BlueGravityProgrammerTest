@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Head Item", menuName = "NekraByte/Item/Cloth/New Head Item")]
-public class HeadItem : ClothItem
+public class HeadItem : EquipableItem
 {
     //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
     //Model_HeadItem - (0.1)

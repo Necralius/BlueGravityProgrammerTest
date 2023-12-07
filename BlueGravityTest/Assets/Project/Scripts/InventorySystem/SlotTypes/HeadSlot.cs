@@ -11,7 +11,7 @@ public class HeadSlot : ClothSlot
     //This code represents an cloth slot item add behavior.
     //NOTE: This slot is limited to head items, like an hat, or an hair piece;
 
-    public override void AddClothItem(ClothItem item)
+    public override void AddClothItem(EquipableItem item)
     {
         //This method rerepesents an item add kind of override, ot only adds the item to the slot, but also equip the paper doll layer, thus equiping the selected cloths.
         AddItem(item);

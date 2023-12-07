@@ -40,12 +40,6 @@ namespace NekraliusDevelopmentStudio
                     if (newItem is ConsumableItem) 
                         GetComponentInParent<ConsumableSlot>().AddItem(eventData.pointerDrag.GetComponent<HandlerItemDrag>()._currentSlot.GetAnRemoveItem());
                 }
-                //else if (GetComponentInParent<ItemSlot>() is ModelShopSlot)
-                //{
-                //    //This method verifies if the slot dropped is and shop slot, and execute the necessary updates and values passes.
-                //    GetComponentInParent<ItemSlot>().AddItem(eventData.pointerDrag.GetComponent<HandlerItemDrag>().currentSlot.RemoveItem());
-                //    //ShopSystem.Instace.ItemModified();
-                //}
                 else if (GetComponentInParent<ItemSlot>())
                 {
                     //If the slot is of an commum type (Model_Slot) the item is normaly added to the slot.

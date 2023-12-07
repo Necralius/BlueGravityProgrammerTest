@@ -46,4 +46,16 @@ public class InventoryView : MonoBehaviour, IPointerClickHandler
                 InspectItem(eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot.item);
         }
     }
+
+    public void RemoveItem()
+    {
+        
+    }
+
+    public void EquipItem()
+    {
+        if (selectedItem != null)
+            if (selectedItem is EquipableItem) 
+                PaperdollController.Instance.EquipCloth(selectedItem as EquipableItem);
+    }
 }

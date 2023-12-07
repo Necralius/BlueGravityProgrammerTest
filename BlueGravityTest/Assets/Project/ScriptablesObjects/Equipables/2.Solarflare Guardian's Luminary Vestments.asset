@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6eb21095ecb14942b68a0756cad235a, type: 3}
+  m_Name: 2.Solarflare Guardian's Luminary Vestments
+  m_EditorClassIdentifier: 
+  Name: Solarflare Guardian's Luminary Vestments
+  Description: 'Harnessing the power of the blazing sun, Solas, the Solarflare Guardian,
+    crafted the Luminary Vestments.
+
+    +10 Armour'
+  Icon: {fileID: 21300000, guid: 526bcf88a10de7b4180b79d9915c4505, type: 3}
+  SellCost: 70
+  BuyCost: 130
+  bodyPartPrefab: {fileID: 7863442132491232172, guid: 43024daba10a94c4daf2ae64551f0988, type: 3}
+  itemBodyType: 1
