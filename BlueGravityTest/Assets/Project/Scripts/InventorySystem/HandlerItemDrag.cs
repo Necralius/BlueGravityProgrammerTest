@@ -1,84 +1,86 @@
-using NekraliusDevelopmentStudio;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Handles the dragging and clicking events for an item.
+/// </summary>
 [RequireComponent(typeof(Image), typeof(HandlerDrop))]
 public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBeginDragHandler, IPointerClickHandler
 {
-    //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
-    //ItemDragHandler - (0.3)
-    //State: Functional
-    //This code represents an item drag handler that receive some BuiltIn unity mouse events interfaces that enables the use of the mouse as an very active input, this class handle the drag start, persistent drag and the drag end.
+    // Image component of the actual GameObject.
+    private Image _image => GetComponent<Image>();
 
-    private Image               _image          => GetComponent<Image>();
-    private InventoryController _invController  = null;
-    private Transform           _parentSave     = null;
+    // Reference to the InventoryController.
+    private InventoryController _invController = null;
 
+    // Parent of the item before the drag action.
+    private Transform _parentSave = null;
+
+    // Reference to the current item slot.
     [HideInInspector] public ItemSlot _currentSlot = null;
 
     private void Start()
     {
+        // Get references to the current item slot and the InventoryController.
         _currentSlot    = GetComponentInParent<ItemSlot>();
         _invController  = GetComponentInParent<ControllerTopDown>().invController;
     }
 
-    // ----------------------------------------------------------------------
-    // Name: OnPointerClick (Method)
-    // Desc: 
-    // ----------------------------------------------------------------------
+    /// <summary>
+    /// Called when the mouse drag action begins on this object.
+    /// </summary>
+    /// <param name="eventData">The pointer event data.</param>
     public void OnBeginDrag(PointerEventData eventData)
     {
-        /*Method called when the mouse pointer starts an drag on this object, also as all mouse event interfaces, the method receive an argument that has a lot of 
-         * information about the mouse pointer, what makes this very usefull.
-         * NOTE: Note that the image raycast target is disable when the drag action starts, the system is maded this way because when an item is beteween the target 
-         * slot to drop and the mouse pointer, the slot cannot be detected, thus making the drag and drop action between slots impossible.
-         */
-
+        // Disable raycast target to allow other UI elements to be detected during drag.
         _image.raycastTarget = false;
         _parentSave = GetComponentInParent<ItemSlot>().transform;
         transform.SetParent(GetComponentInParent<Canvas>().transform);
 
+        // If the dragged item is a cloth item, unequip it from the player.
         if (_currentSlot.item is EquipableItem)
         {
-            //This statement verifies if the item dragged is and cloth item, and if it is, the cloth item is unequiped from the player.
             EquipableItem clothItem = (EquipableItem)_currentSlot.item;
-            PaperdollController.Instance.DequipCloth(clothItem);
+            PaperdollController.Instance.DequipItem(clothItem);
         }
+
+        // Inspect the item if the slot has an item.
         if (_currentSlot.hasItem)
             _invController.invetoryView.InspectItem(_currentSlot);
     }
 
-    // ----------------------------------------------------------------------
-    // Name: OnPointerClick (Method)
-    // Desc: 
-    // ----------------------------------------------------------------------
-    public void OnDrag(PointerEventData eventData) //Method called every frame that the pointer is beeing dragged in the object.
+    /// <summary>
+    /// Called every frame that the pointer is being dragged over the object.
+    /// </summary>
+    /// <param name="eventData">The pointer event data.</param>
+    public void OnDrag(PointerEventData eventData)
     {
-        //This method sets the gameobject position to the mouse position, making and great drag visual feeling.
+        // Set the position of the game object to the mouse position for a smooth drag effect
         transform.position = InputManager.Instance.PointerPos;
     }
 
-    // ----------------------------------------------------------------------
-    // Name: OnPointerClick (Method)
-    // Desc: 
-    // ----------------------------------------------------------------------
-    public void OnEndDrag(PointerEventData eventData) //Method called every time that the mouse pointer ends and drag action in the object.
+    /// <summary>
+    /// Called when the mouse drag action ends over the object.
+    /// </summary>
+    /// <param name="eventData">The pointer event data.</param>
+    public void OnEndDrag(PointerEventData eventData)
     {
-        //In the method the item will return to his original position and the raycastTarget property is turned again to true.
+        // Return the item to its original position and enable raycast target.
         transform.SetParent(_parentSave);
-        _image.raycastTarget        = true;
-        transform.localPosition     = Vector2.zero;
+        _image.raycastTarget = true;
+        transform.localPosition = Vector2.zero;
     }
 
-    // ----------------------------------------------------------------------
-    // Name: OnPointerClick (Method)
-    // Desc: 
-    // ----------------------------------------------------------------------
-    public void OnPointerClick(PointerEventData eventData) //This method detects an mouse click on the object
+    /// <summary>
+    /// Called when a mouse click is detected on the object.
+    /// </summary>
+    /// <param name="eventData">The pointer event data.</param>
+    public void OnPointerClick(PointerEventData eventData)
     {
-        //TODO -> Item inspection 
+        // TODO: Item inspection
 
+        // Inspect the item if the slot has an item
         if (_currentSlot.hasItem)
             _invController.invetoryView.InspectItem(_currentSlot);
     }

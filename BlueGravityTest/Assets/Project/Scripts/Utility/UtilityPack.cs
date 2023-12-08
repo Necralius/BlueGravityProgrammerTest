@@ -1,9 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace NekraByte
+// Namespace to organize code and prevent naming conflicts.
+namespace NekraByte //Represent an utility pack that can store any new data type, struct or enumeration of the project.
 {
-    public enum ClothType { Head, Suit, Weapon }
+    // Enumeration defining different types of equipable items.
+    public enum EquipableType
+    {
+        Head,   // Type for head equipment.
+        Suit,   // Type for suit equipment.
+        Weapon  // Type for weapon equipment.
+    }
 }

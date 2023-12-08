@@ -1,77 +1,99 @@
-using NekraliusDevelopmentStudio;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the visual representation and interaction of the player's inventory. (MVC - View)
+/// </summary>
 public class InventoryView : MonoBehaviour
 {
     private InventoryController _inventoryController = null;
 
     [Header("Item Inspection")]
-    [SerializeField] private Image              itemImage       = null;
-    [SerializeField] private TextMeshProUGUI    itemName        = null;
-    [SerializeField] private TextMeshProUGUI    itemDescription = null;
-    [SerializeField] private TextMeshProUGUI    itemPrice       = null;
-    [SerializeField] private Item               selectedItem    = null;
-    [SerializeField] private ItemSlot           selectedItemSlot = null;
-    [SerializeField] private Sprite             nullItemSprt    = null;
+    [SerializeField] private Image              itemImage           = null;
+    [SerializeField] private TextMeshProUGUI    itemName            = null;
+    [SerializeField] private TextMeshProUGUI    itemDescription     = null;
+    [SerializeField] private TextMeshProUGUI    itemPrice           = null;
+    [SerializeField] private Item               selectedItem        = null;
+    [SerializeField] private ItemSlot           selectedItemSlot    = null;
+    [SerializeField] private Sprite             nullItemSprt        = null;
 
     private void Start()
     {
-        _inventoryController    = GetComponent<InventoryController>();
+        // Get a reference to the InventoryController component
+        _inventoryController = GetComponent<InventoryController>();
     }
 
+    /// <summary>
+    /// Inspects the details of a selected item in the inventory.
+    /// </summary>
+    /// <param name="slotSave">The slot containing the item to be inspected.</param>
     public void InspectItem(ItemSlot slotSave)
     {
-        selectedItem            = slotSave.item;
-        selectedItemSlot        = slotSave;
+        selectedItem = slotSave.item;
+        selectedItemSlot = slotSave;
 
-        itemImage.sprite        = selectedItem.Icon;
-        itemName.text           = selectedItem.Name;
-        itemDescription.text    = selectedItem.Description;
-        itemPrice.text          = $"Price: {selectedItem.SellCost}";
+        // Update UI elements with information about the selected item
+        itemImage.sprite            = selectedItem.Icon;
+        itemName.text               = selectedItem.Name;
+        itemDescription.text        = selectedItem.Description;
+        itemDescription.alignment   = TextAlignmentOptions.Left;
+        itemPrice.text              = $"Price: {selectedItem.SellCost}";
     }
 
+    /// <summary>
+    /// Removes the inspection details of the currently selected item.
+    /// </summary>
     public void RemoveInspectionItem()
     {
-        itemImage.sprite        = nullItemSprt;
+        // Reset UI elements to default values
+        itemImage.sprite = nullItemSprt;
 
-        itemName.text           = "Inspected Item Name";
-        itemDescription.text    = "Item Description";
-        itemPrice.text          = "Item Price";
+        itemName.text               = "Inspected Item Name";
+        itemDescription.text        = "Item Description";
+        itemDescription.alignment   = TextAlignmentOptions.Center;
+        itemPrice.text              = "Item Price";
     }
 
-    //public void OnPointerClick(PointerEventData eventData)
-    //{
-    //    RemoveInspectionItem();
-    //    if (eventData.selectedObject != null && eventData.selectedObject.CompareTag("ItemSlot"))
-    //    {
-    //        if (eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot.hasItem)
-    //            InspectItem(eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot);
-    //    }
-    //}
-
+    /// <summary>
+    /// Removes the currently selected item from the inventory.
+    /// </summary>
     public void RemoveItem()
     {
         if (selectedItem != null)
         {
+            // Dequip cloth items before removing
             if (selectedItem is EquipableItem)
-                _inventoryController.playerInstance.paperDoll.DequipCloth(selectedItem as EquipableItem);
+                _inventoryController.playerInstance.paperDoll.DequipItem(selectedItem as EquipableItem);
 
+            // Remove the item from the inventory
             _inventoryController.RemoveItem(selectedItemSlot);
         }
     }
 
+    /// <summary>
+    /// Equips or uses the currently selected item.
+    /// </summary>
     public void EquipOrUseItem()
     {
         if (selectedItem != null)
         {
-            if (selectedItem is EquipableItem) 
-                _inventoryController.playerInstance.paperDoll.EquipCloth(selectedItem as EquipableItem);
+            // Equip cloth items
+            if (selectedItem is EquipableItem)
+            {
+                _inventoryController.playerInstance.paperDoll.EquipItem(selectedItem as EquipableItem);
+                selectedItem        = null;
+                selectedItemSlot    = null;
+            }
 
+            // Use consumable items
             if (selectedItem is ConsumableItem)
-                _inventoryController.playerInstance.aspects.ConsumeItem(selectedItem as ConsumableItem);
+            {
+                _inventoryController.playerInstance.aspects.EquipOrUse(selectedItem as ConsumableItem);
+                _inventoryController.RemoveItem(selectedItemSlot);
+                selectedItem        = null;
+                selectedItemSlot    = null;
+            }
         }
     }
 }

@@ -1,17 +1,11 @@
-using NekraByte;
-using NekraliusDevelopmentStudio;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Represents a cloth slot model that carries specific add behavior.
+/// </summary>
 public class ClothSlot : ItemSlot
 {
-    //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
-    //Model_ClothSlot - (0.1)
-    //State: Functional
-    //This code represents an cloth slot model that carries a especific add behavior. 
-
-    #region - Custom Cloth Item Add -
-    public virtual void AddClothItem(EquipableItem item) { } //This method carrys and cloth item add, so this way adding and not implemented void that exists with the purpose to be implemented in future classes.
-    #endregion
+    /// <summary>
+    /// Adds a cloth item to the cloth slot, it is an virtual class, so it can be implemented in the future.
+    /// </summary>
+    /// <param name="item">The cloth item to be added.</param>
+    public virtual void AddClothItem(EquipableItem item) { }
 }

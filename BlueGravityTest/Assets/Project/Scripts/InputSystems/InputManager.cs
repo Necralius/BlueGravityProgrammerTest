@@ -3,43 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Manages the complete player input using Unity's Input System.
+/// </summary>
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
-    #region - Singleton Pattern -
     public static InputManager Instance;
-    #endregion
 
-    //Direct Dependencies
+    // Direct Dependencies
     private PlayerInput     _inputAsset         => GetComponent<PlayerInput>();
     private InputActionMap  _currentActionMap   = null;
 
     [Header("Input Values")]
-    public Vector2  Move            = new Vector2(0, 0);
-    public Vector2  PointerPos      = new Vector2(0, 0);
-    public bool     Running         = false;
-    public bool     Attack          = false;
-    public bool     HeavyAttack     = false;
-    public bool     Dash            = false;
-    public bool     Interacted      = false;
-    public bool     PausedGame      = false;
-    public bool     InventoryOpen   = false;
+    public Vector2 Move         = new Vector2(0, 0);
+    public Vector2 PointerPos   = new Vector2(0, 0);
+    public bool Running         = false;
+    public bool Attack          = false;
+    public bool HeavyAttack     = false;
+    public bool Dash            = false;
+    public bool Interacted      = false;
+    public bool PausedGame      = false;
+    public bool InventoryOpen   = false;
 
+    //Input actions
     [HideInInspector] public InputAction MoveAction         = null;
     [HideInInspector] public InputAction PointerAction      = null;
     [HideInInspector] public InputAction AttackAction       = null;
     [HideInInspector] public InputAction DashAction         = null;
-
     [HideInInspector] public InputAction HeavyAttackAction  = null;
     [HideInInspector] public InputAction RunAction          = null;
-
     [HideInInspector] public InputAction InteractAction     = null;
     [HideInInspector] public InputAction PauseMenuAction    = null;
     [HideInInspector] public InputAction InventoryAction    = null;
 
+    /// <summary>
+    /// Initializes necessary components and subscribes to input actions.
+    /// </summary>
     private void Awake()
     {
-        Instance = this;
+        Instance = this; //Simplified singleton, for very specific use.
 
         _currentActionMap = _inputAsset.currentActionMap;
 
@@ -53,41 +56,48 @@ public class InputManager : MonoBehaviour
         PauseMenuAction     = _currentActionMap.FindAction("PauseInteraction");
         InventoryAction     = _currentActionMap.FindAction("InventoryInteraction");
 
-        MoveAction.performed        += onMove;
-        PointerAction.performed     += onPointerMoved;
-        RunAction.performed         += onRun;
-        DashAction.performed        += onDash;
-        AttackAction.performed      += onAttack;
-        HeavyAttackAction.performed += onHeavyAttack;
-        InteractAction.performed    += onInteract;
-        PauseMenuAction.performed   += onPause;
-        InventoryAction.performed   += onInventoryOpen;
+        MoveAction.performed            += onMove;
+        PointerAction.performed         += onPointerMoved;
+        RunAction.performed             += onRun;
+        DashAction.performed            += onDash;
+        AttackAction.performed          += onAttack;
+        HeavyAttackAction.performed     += onHeavyAttack;
+        InteractAction.performed        += onInteract;
+        PauseMenuAction.performed       += onPause;
+        InventoryAction.performed       += onInventoryOpen;
 
-        MoveAction.canceled         += onMove;
-        PointerAction.canceled      += onPointerMoved;
-        RunAction.canceled          += onRun;
-        DashAction.canceled         += onDash;
-        AttackAction.canceled       += onAttack;
-        HeavyAttackAction.canceled  += onHeavyAttack;
-        InteractAction.canceled     += onInteract;
-        PauseMenuAction.canceled    += onPause;
-        InventoryAction.canceled    += onInventoryOpen;
+        MoveAction.canceled             += onMove;
+        PointerAction.canceled          += onPointerMoved;
+        RunAction.canceled              += onRun;
+        DashAction.canceled             += onDash;
+        AttackAction.canceled           += onAttack;
+        HeavyAttackAction.canceled      += onHeavyAttack;
+        InteractAction.canceled         += onInteract;
+        PauseMenuAction.canceled        += onPause;
+        InventoryAction.canceled        += onInventoryOpen;
     }
 
-    private void onMove(InputAction.CallbackContext context)            => Move             = context.ReadValue<Vector2>();
-    private void onPointerMoved(InputAction.CallbackContext context)    => PointerPos       = context.ReadValue<Vector2>();
-    private void onRun(InputAction.CallbackContext context)             => Running          = context.ReadValueAsButton();
-    private void onAttack(InputAction.CallbackContext context)          => Attack           = context.ReadValueAsButton();
-    private void onHeavyAttack(InputAction.CallbackContext context)     => HeavyAttack      = context.ReadValueAsButton();
-    private void onDash(InputAction.CallbackContext context)            => Dash             = context.ReadValueAsButton();
-    private void onInteract(InputAction.CallbackContext context)        => Interacted       = context.ReadValueAsButton();
-    private void onPause(InputAction.CallbackContext context)           => PausedGame       = context.ReadValueAsButton();
-    private void onInventoryOpen(InputAction.CallbackContext context)   => InventoryOpen    = context.ReadValueAsButton();
+    private void onMove(InputAction.CallbackContext context)            => Move = context.ReadValue<Vector2>();
+    private void onPointerMoved(InputAction.CallbackContext context)    => PointerPos = context.ReadValue<Vector2>();
+    private void onRun(InputAction.CallbackContext context)             => Running = context.ReadValueAsButton();
+    private void onAttack(InputAction.CallbackContext context)          => Attack = context.ReadValueAsButton();
+    private void onHeavyAttack(InputAction.CallbackContext context)     => HeavyAttack = context.ReadValueAsButton();
+    private void onDash(InputAction.CallbackContext context)            => Dash = context.ReadValueAsButton();
+    private void onInteract(InputAction.CallbackContext context)        => Interacted = context.ReadValueAsButton();
+    private void onPause(InputAction.CallbackContext context)           => PausedGame = context.ReadValueAsButton();
+    private void onInventoryOpen(InputAction.CallbackContext context)   => InventoryOpen = context.ReadValueAsButton();
 
+    /// <summary>
+    /// Disables the current action map when the script is disabled.
+    /// </summary>
     private void OnDisable()
     {
         _currentActionMap.Disable();
     }
+
+    /// <summary>
+    /// Enables the current action map when the script is enabled.
+    /// </summary>
     private void OnEnable()
     {
         _currentActionMap.Enable();

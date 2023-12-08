@@ -1,37 +1,44 @@
 using UnityEngine;
 using NekraByte;
 
+/// <summary>
+/// Represents an equipable body part that can be attached to a character.
+/// </summary>
 public class BodyPart : MonoBehaviour
 {
-    private CharacterAspects _aspectsManager;
+    // Direct Dependencies
+    protected CharacterAspects _aspectsManager;
 
-    [SerializeField] private GameObject     Part        = null;
-    [SerializeField] private EquipableItem  ItemEquiped = null;
+    [Header("Equipable Body Part")]
+    [SerializeField] protected GameObject Part = null;
 
-    public  ClothType    Type        = ClothType.Suit;
-    private Vector3      Position    = Vector3.zero;
-    private Vector3      Scale       = Vector3.zero;
-    private bool         Initialized = false;
+    [Header("Equipable Settings and Data")]
+    [SerializeField] public    EquipableType    Type            = EquipableType.Suit;
+    [SerializeField] protected EquipableItem    ItemEquiped     = null;
+    [SerializeField] protected EquipableItem    defaultBodyPart = null;
 
-    [SerializeField] private EquipableItem defaultBodyPart = null;
-
-    public BodyPart(GameObject bodyPart, ClothType Type)
-    {
-        this.Type   = Type;
-        Part        = bodyPart;
-        Position    = bodyPart.transform.localPosition;
-        Scale       = bodyPart.transform.localScale;
-        Initialized = true;
-    }
+    // Private Data
+    private Vector3 Position        = Vector3.zero;
+    private Vector3 Scale           = Vector3.zero;
+    protected bool  Initialized     = false;
 
     private void Start()
     {
         _aspectsManager = GetComponentInParent<CharacterAspects>();
+        InitializeBodyPart();
+    }
+
+    /// <summary>
+    /// Initializes the body part, equipping it if a valid part and item are provided.
+    /// </summary>
+    protected virtual void InitializeBodyPart()
+    {
         if (!Initialized)
         {
             if (Part != null && ItemEquiped != null)
             {
-                _aspectsManager.EquipArmor(ItemEquiped);
+                _aspectsManager.EquipOrUse(ItemEquiped);
+
                 Position    = Part.transform.localPosition;
                 Scale       = Part.transform.localScale;
                 Initialized = true;
@@ -39,28 +46,33 @@ public class BodyPart : MonoBehaviour
         }
     }
 
-    public void ChangeBodyPart(EquipableItem newBodyPart)
+    /// <summary>
+    /// Changes the current body part to a new one.
+    /// </summary>
+    /// <param name="newBodyPart">The new body part item.</param>
+    public virtual void ChangeBodyPart(Item newBodyPart)
     {
-        if (newBodyPart == null)
+        if (newBodyPart == null || !(newBodyPart is ClothItem))
         {
             Debug.LogWarning("Invalid body part!");
             return;
         }
 
-        _aspectsManager.DequipArmor(ItemEquiped);
-        _aspectsManager.EquipArmor(newBodyPart);
+        ClothItem item = (ClothItem)newBodyPart;
+        _aspectsManager.DequipItem(ItemEquiped);
+        _aspectsManager.EquipOrUse(newBodyPart);
 
-        Destroy(Part);
+        Destroy(Part); //Destroys the previous body part.
 
-        ItemEquiped = newBodyPart;
+        ItemEquiped = item;
 
-        Part = Instantiate(newBodyPart.bodyPartPrefab, transform);
+        Part = Instantiate(item.bodyPartPrefab, transform); //Instatiate the new one.
         Part.transform.localPosition    = Position;
         Part.transform.localScale       = Scale;
     }
 
-    public void RemoveBodyPart()
-    {
-        ChangeBodyPart(defaultBodyPart);
-    }
+    /// <summary>
+    /// Removes the current body part, replacing it with the default one.
+    /// </summary>
+    public void RemoveBodyPart() => ChangeBodyPart(defaultBodyPart);
 }

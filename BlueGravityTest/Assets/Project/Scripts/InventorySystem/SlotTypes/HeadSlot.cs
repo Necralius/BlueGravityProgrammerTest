@@ -1,20 +1,15 @@
-using NekraliusDevelopmentStudio;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+/// <summary>
+/// Represents a slot specifically for head cloth items.
+/// </summary>
 public class HeadSlot : ClothSlot
 {
-    //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
-    //Model_HeadSlot - (0.3)
-    //State: Functional
-    //This code represents an cloth slot item add behavior.
-    //NOTE: This slot is limited to head items, like an hat, or an hair piece;
-
+    /// <summary>
+    /// Adds a head cloth item to the slot and equips it on the paper doll layer.
+    /// </summary>
+    /// <param name="item">The head cloth item to be added.</param>
     public override void AddClothItem(EquipableItem item)
     {
-        //This method rerepesents an item add kind of override, ot only adds the item to the slot, but also equip the paper doll layer, thus equiping the selected cloths.
+        // This method overrides the base method to add a head cloth item.
         AddItem(item);
-        //PaperDollSystem.Instance.SetUpLayer(item.paperDollLayerID);
     }
 }

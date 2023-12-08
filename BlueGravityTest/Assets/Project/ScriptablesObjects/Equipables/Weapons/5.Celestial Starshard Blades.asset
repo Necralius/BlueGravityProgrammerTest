@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab2acf7299c4c9409bad928c9bcf113, type: 3}
+  m_Name: 5.Celestial Starshard Blades
+  m_EditorClassIdentifier: 
+  Name: Celestial Starshard Blades
+  Description: Astrid, the Astral Weaver, wove the Celestial Starshard Blades from
+    the essence of fallen stars. +18 Damage.
+  Icon: {fileID: 21300000, guid: 5009a70cad0bbe94f8f8ab9148bd7915, type: 3}
+  SellCost: 30
+  BuyCost: 63
+  itemBodyType: 2
+  Damage: 18
+  weaponL_wrist: {fileID: 4552349530847542735, guid: 931f83ecbf7f7b240a06bfc014425a86, type: 3}
+  weaponR_wrist: {fileID: 6533461325920426827, guid: 0a5224ac22b34304f90efe4ee1b289da, type: 3}

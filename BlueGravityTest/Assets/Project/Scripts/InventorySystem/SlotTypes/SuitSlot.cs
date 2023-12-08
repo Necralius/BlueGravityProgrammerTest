@@ -1,21 +1,15 @@
-using NekraliusDevelopmentStudio;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-
+/// <summary>
+/// Represents a slot for suit items, limited to complete costumes.
+/// </summary>
 public class SuitSlot : ClothSlot
 {
-    //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
-    //Model_SuitSlot - (0.1)
-    //State: Functional
-    //This code represents an cloth slot item add behavior.
-    //This slot is limited to suit items, like complete costumes.
-
+    /// <summary>
+    /// Adds a suit item to the slot, equipping the paper doll layer.
+    /// </summary>
+    /// <param name="item">The suit item to be added.</param>
     public override void AddClothItem(EquipableItem item)
     {
-        //This method rerepesents an item add kind of override, ot only adds the item to the slot, but also equip the paper doll layer, thus equiping the selected cloths.
+        // This method represents an item add override. It not only adds the item to the slot
         AddItem(item);
-        //PaperDollSystem.Instance.SetUpLayer(item.paperDollLayerID);
     }
 }

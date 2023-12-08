@@ -1,14 +1,13 @@
 using UnityEngine;
 using NekraByte;
 
+/// <summary>
+/// Represents an equipable item, such as clothing.
+/// Extends the <see cref="Item"/> class.
+/// </summary>
 public class EquipableItem : Item
 {
-    //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
-    //Model_ClothItem - (0.1)
-    //State: Functional
-    //This code represents an simple cloth item, that carries an unique information from the cloth item type.
-
-    public GameObject   bodyPartPrefab  = null;
-    public ClothType    itemBodyType    = ClothType.Head;
-    public int          armorPoints     = 0;
+    // The body part type associated with this cloth item.
+    [Header("Body Part Setting")]
+    public EquipableType itemBodyType = EquipableType.Head;
 }

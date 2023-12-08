@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab2acf7299c4c9409bad928c9bcf113, type: 3}
+  m_Name: 6.Thunderstrike Stormcall Daggers
+  m_EditorClassIdentifier: 
+  Name: Thunderstrike Stormcall Daggers
+  Description: 'Forged by Riven, the Stormcaller, the Thunderstrike Stormcall Daggers
+    harness the fury of thunderstorms.
+
+    +22 Damage'
+  Icon: {fileID: 21300000, guid: 753656ebcc8166d40adbc8eea059b35c, type: 3}
+  SellCost: 43
+  BuyCost: 76
+  itemBodyType: 2
+  Damage: 22
+  weaponL_wrist: {fileID: 2831147176106698016, guid: c2726e7dc92b15e4d8491e2598b7290e, type: 3}
+  weaponR_wrist: {fileID: 5064373810506747126, guid: 6f615584767d1764ab00dfb42405e612, type: 3}

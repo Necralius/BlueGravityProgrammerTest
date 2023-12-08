@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab2acf7299c4c9409bad928c9bcf113, type: 3}
+  m_Name: 4.Shadowstep Serpent Fangs
+  m_EditorClassIdentifier: 
+  Name: Shadowstep Serpent Fangs
+  Description: 'Utilized by Dorian, the master thief of Thieves'' Haven, the Shadowstep
+    Serpent Fangs are wicked daggers crafted from the fangs of a mystical serpent.
+
+    +28
+    Damage'
+  Icon: {fileID: 21300000, guid: 2d47c368f17068e4cbffdea29a67a712, type: 3}
+  SellCost: 50
+  BuyCost: 93
+  itemBodyType: 2
+  Damage: 28
+  weaponL_wrist: {fileID: 4267676199099042401, guid: c856129f50bf19240ab45d84ebcb8221, type: 3}
+  weaponR_wrist: {fileID: 4288466660804043773, guid: fcdc50a539e2a6a41a4df813c01fc3a5, type: 3}

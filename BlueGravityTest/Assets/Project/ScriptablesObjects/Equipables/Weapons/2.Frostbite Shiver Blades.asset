@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aab2acf7299c4c9409bad928c9bcf113, type: 3}
+  m_Name: 2.Frostbite Shiver Blades
+  m_EditorClassIdentifier: 
+  Name: Frostbite Shiver Blades
+  Description: 'Imbued with the essence of the Arctic Wraith, the Frostbite Shiver
+    Blades were crafted by Elara, an ice mage seeking perfection.
+
+    +20 Damage'
+  Icon: {fileID: 21300000, guid: 32ecc6094c9f9f949b182b42d68af0fb, type: 3}
+  SellCost: 38
+  BuyCost: 70
+  itemBodyType: 2
+  Damage: 20
+  weaponL_wrist: {fileID: 1748114082271117385, guid: 588d40c19f9238045a6f0efa40394449, type: 3}
+  weaponR_wrist: {fileID: 1842556771395832612, guid: 9e66a249cc988854da3d599aa3b1e5b8, type: 3}

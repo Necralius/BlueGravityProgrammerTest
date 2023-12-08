@@ -1,32 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents an item slot model that holds item data, basic behavior, and controls item UI (MVC - Subsystem - Controller and View).
+/// </summary>
 public class ItemSlot : MonoBehaviour
 {
-    //Code made by Victor Paulo Melo da Silva - Game Developer - GitHub - https://github.com/Necralius
-    //Model_Slot - (0.4)
-    //State: Functional
-    //This code represents an item slot model that holds all item data and basic behavior, also controlling the item UI.
-
-    #region - Item Data and UI-
     [Header("Item Data")]
     public Image itemImage;
     public bool hasItem = false;
     public Item item;
-    #endregion
 
-    //============================Methods============================//
+    /// <summary>
+    /// Called in the game start to update the UI.
+    /// </summary>
+    private void Start() => UpdateUI();
 
-    #region - BuiltIn Methods -
-    private void Start() => UpdateUI(); //-> Called in the game start
-    #endregion
-
-    #region - UI Update -
-    public void UpdateUI() //This method updates all the slot UI, is called mainly on every item modification.
+    /// <summary>
+    /// Updates all the slot UI, mainly called on every item modification.
+    /// </summary>
+    public void UpdateUI()
     {
         hasItem = item;
         itemImage.color = hasItem ? Color.white : new Color(255, 255, 255, 0);
@@ -34,27 +27,42 @@ public class ItemSlot : MonoBehaviour
 
         itemImage.sprite = item.Icon;
     }
-    #endregion
 
-    #region - Item Main Behaviors -
-    public void AddItem(Item item) //This method add an item to the current slot and update the slot.
+    /// <summary>
+    /// Adds an item to the current slot and updates the slot.
+    /// </summary>
+    /// <param name="item">The item to be added.</param>
+    public void AddItem(Item item)
     {
         this.item = item;
         UpdateUI();
         ItemWasModified();
     }
-    public Item GetAnRemoveItem() //This method remove an item to the current slot and update the slot.
-    {
-        Item itemRef    = item;
 
-        item            = null;
-        hasItem         = false;
+    /// <summary>
+    /// Removes an item from the current slot and updates the slot.
+    /// </summary>
+    /// <returns>The removed item.</returns>
+    public Item GetAnRemoveItem()
+    {
+        Item itemRef = item;
+
+        item = null;
+        hasItem = false;
 
         UpdateUI();
         ItemWasModified();
         return itemRef;
     }
-    public virtual void ItemWasModified() { } //This method represent an callback, an kind of warning that tells every time that an item is modified, also this method is virtual, what means that this method can be overrided in other classes.
-    public Item GetItem() => item; //This method represent a simple get that returns the current item on the slot.
-    #endregion
+
+    /// <summary>
+    /// Represents a callback indicating that an item is modified.
+    /// </summary>
+    public virtual void ItemWasModified() { }
+
+    /// <summary>
+    /// Gets the current item on the slot.
+    /// </summary>
+    /// <returns>The current item on the slot.</returns>
+    public Item GetItem() => item;
 }

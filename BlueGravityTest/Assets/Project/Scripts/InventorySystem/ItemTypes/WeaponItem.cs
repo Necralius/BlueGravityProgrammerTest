@@ -1,13 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-[CreateAssetMenu(fileName = "New Weapon Item", menuName = "NekraByte/Item/Weapon/New Weapon Item")]
-public class WeaponItem : Item
+/// <summary>
+/// Represents a weapon item, extending the <see cref="EquipableItem"/> class.
+/// </summary>
+[CreateAssetMenu(fileName = "New Weapon Item", menuName = "NekraByte/Item/Equipable/Weapon/New Weapon Item")]
+public class WeaponItem : EquipableItem
 {
-    [SerializeField, Range(10f, 200f)]  float Damage        = 10f;
-    [SerializeField, Range(1f, 10f)]    float AttackSpeed   = 2f;
+    [Header("Weapon Settings")]
+    [Range(10f, 200f)] public int Damage = 10; // The damage value of the weapon.
 
-    public GameObject bodyPartPrefab = null;
+    //The both hands weapon references.
+    [Header("Weapon Parts Prefabs")]
+    public GameObject weaponL_wrist = null;
+    public GameObject weaponR_wrist = null;
 }
