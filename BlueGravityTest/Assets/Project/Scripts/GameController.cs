@@ -5,15 +5,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    #region - Singleton Pattern -
-    public static GameController Instance;
-    private void Awake()
-    {
-        Instance = this;
-    }
-    #endregion
-
-    public InventoryController _inventoryController = null;
+    private ControllerTopDown _playerInstance;
 
     [Header("Inventory and Pause Interactions")]
     public GameObject inventoryObject   = null;
@@ -24,7 +16,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        _inventoryController = inventoryObject.GetComponent<InventoryController>();
+        _playerInstance = GetComponentInParent<ControllerTopDown>();
     }
 
     public void PauseInteraction()
@@ -41,6 +33,17 @@ public class GameController : MonoBehaviour
 
         inventoryObject.SetActive(!inventoryObject.activeInHierarchy);
         inventoryOpen = !inventoryOpen;
+
+        if (inventoryObject.activeInHierarchy) _playerInstance.aspects.UpdateUI(true);
+    }
+
+    public void InventoryInteraction(bool forceState)
+    {
+        if (inventoryObject == null) return;
+
+        inventoryObject.SetActive(forceState);
+        inventoryOpen = forceState;
+        if (forceState) _playerInstance.aspects.UpdateUI(true);
     }
 
     public void QuitGame()
@@ -51,5 +54,4 @@ public class GameController : MonoBehaviour
     {
         //Load Menu
     }
-
 }

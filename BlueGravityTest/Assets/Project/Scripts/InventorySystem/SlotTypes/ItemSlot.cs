@@ -45,12 +45,14 @@ public class ItemSlot : MonoBehaviour
     }
     public Item GetAnRemoveItem() //This method remove an item to the current slot and update the slot.
     {
-        Item thisItem   = item;
+        Item itemRef    = item;
+
         item            = null;
         hasItem         = false;
+
         UpdateUI();
         ItemWasModified();
-        return thisItem;
+        return itemRef;
     }
     public virtual void ItemWasModified() { } //This method represent an callback, an kind of warning that tells every time that an item is modified, also this method is virtual, what means that this method can be overrided in other classes.
     public Item GetItem() => item; //This method represent a simple get that returns the current item on the slot.

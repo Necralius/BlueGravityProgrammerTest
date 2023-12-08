@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8804bc211bef5eb4eb8ecc54a14233fe, type: 3}
+  m_Name: 4.Phantom Stalker's Shadow Hood
+  m_EditorClassIdentifier: 
+  Name: Phantom Stalker's Shadow Hood
+  Description: 'Elara, the Phantom Stalker, wove the Shadow Hood, a cloak of stealth
+    for the head.
+
+    +8 Armour'
+  Icon: {fileID: 21300000, guid: 2bfe2d1956996124ba0601029e6337f2, type: 3}
+  SellCost: 50
+  BuyCost: 75
+  bodyPartPrefab: {fileID: 4121964866465302130, guid: 266593f0aadc7f349a2e3487849a9e5e, type: 3}
+  itemBodyType: 0
+  armorPoints: 8

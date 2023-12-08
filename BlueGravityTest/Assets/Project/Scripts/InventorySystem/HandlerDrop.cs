@@ -44,6 +44,7 @@ namespace NekraliusDevelopmentStudio
                 {
                     //If the slot is of an commum type (Model_Slot) the item is normaly added to the slot.
                     GetComponentInParent<ItemSlot>().AddItem(eventData.pointerDrag.GetComponent<HandlerItemDrag>()._currentSlot.GetAnRemoveItem());
+                   
                 }
                 else return;
             }

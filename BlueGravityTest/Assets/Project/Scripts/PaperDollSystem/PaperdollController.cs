@@ -17,12 +17,14 @@ public class PaperdollController : MonoBehaviour
     public void EquipCloth(EquipableItem itemToEquip)
     {
         foreach(var part in Parts)
-            if (part.Type == itemToEquip.itemBodyType) 
-                part.ChangeBodyPart(itemToEquip.bodyPartPrefab);
+            if (part.Type == itemToEquip.itemBodyType)
+                part.ChangeBodyPart(itemToEquip);
     }
 
     public void DequipCloth(EquipableItem itemToDequip)
     {
-
+        foreach(var part in Parts) 
+            if (part.Type == itemToDequip.itemBodyType) 
+                part.RemoveBodyPart();
     }
 }

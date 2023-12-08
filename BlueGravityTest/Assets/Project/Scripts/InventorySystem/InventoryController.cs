@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace NekraliusDevelopmentStudio
@@ -7,12 +8,19 @@ namespace NekraliusDevelopmentStudio
     public class InventoryController : MonoBehaviour
     {
         //Direct Dependencies
-        public InventoryView _invetoryView => GetComponent<InventoryView>();
+        [HideInInspector] public InventoryView      invetoryView    = null;
+        [HideInInspector] public ControllerTopDown  playerInstance  = null;
 
         [Header("Slots Data")]
-        public List<ItemSlot> _slots = new List<ItemSlot>();
+        [SerializeField] private List<ItemSlot> _slots = new List<ItemSlot>();
 
         //============================Methods============================//
+
+        private void Start()
+        {
+            invetoryView    = GetComponent<InventoryView>();
+            playerInstance  = GetComponentInParent<ControllerTopDown>();
+        }
 
         #region - Item Management -
         public bool AddItem<T>(T item) where T : Item
@@ -42,7 +50,11 @@ namespace NekraliusDevelopmentStudio
         #endregion
 
         #region - UI Update -
-        public void UpdateInventoryUI() => _slots.ForEach(slot => slot.UpdateUI());
+        public void UpdateInventoryUI()
+        {
+            _slots.ForEach(slot => slot.UpdateUI());
+            playerInstance.aspects.UpdateUI(false);
+        }
         //This method run by all slots, and update his UIs one by one, is used basically in every item change ou inventory change.
         #endregion
     }

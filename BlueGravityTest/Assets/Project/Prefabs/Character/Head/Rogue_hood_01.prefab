@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6062050778072562744}
   - component: {fileID: 6062050778072562743}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rogue_hood_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 12
   m_Sprite: {fileID: 21300000, guid: 8c8a4e6a8adc5594786b64c7e11a78bf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

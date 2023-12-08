@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8804bc211bef5eb4eb8ecc54a14233fe, type: 3}
+  m_Name: 2.Emberforged Emberguard Helm
+  m_EditorClassIdentifier: 
+  Name: Phantom Stalker's Shadow Hood
+  Description: Embera, the Sentinel of Emberforge, forged the Emberguard Helm from
+    the heart of molten fires. +18 Armour,
+  Icon: {fileID: 21300000, guid: 84e5426d4c42d50408c03af063d6f323, type: 3}
+  SellCost: 75
+  BuyCost: 150
+  bodyPartPrefab: {fileID: 457158187662153274, guid: a3fb19281cdea67458c3795d3cca656e, type: 3}
+  itemBodyType: 0
+  armorPoints: 18

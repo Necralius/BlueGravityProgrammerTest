@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6eb21095ecb14942b68a0756cad235a, type: 3}
+  m_Name: 1.Armour of the Shadow Serpent
+  m_EditorClassIdentifier: 
+  Name: Armour of the Shadow Serpent
+  Description: 'Zephyros, a fearless warrior, faced the legendary jungle serpent
+    and forged the Armour of the Shadow Serpent with its scales.
+
+    +25 Armour.'
+  Icon: {fileID: 21300000, guid: a40efecff7dd1854e94466b2e70f9267, type: 3}
+  SellCost: 120
+  BuyCost: 160
+  bodyPartPrefab: {fileID: 4738662470401711996, guid: 1cf792898edf45f49a8efeb872bcd9ab, type: 3}
+  itemBodyType: 1
+  armorPoints: 25

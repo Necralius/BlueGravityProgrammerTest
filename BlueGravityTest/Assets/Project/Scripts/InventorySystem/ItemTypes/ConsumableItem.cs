@@ -10,5 +10,5 @@ public class ConsumableItem : Item
     //State: Functional
     //This code represents an simple food item, that carries an unique information from the food item type.
 
-    public float eatValue; //-> This information tells the nutritional value of the current food.
+    public int cureValue; //-> This information tells the nutritional value of the current food.
 }

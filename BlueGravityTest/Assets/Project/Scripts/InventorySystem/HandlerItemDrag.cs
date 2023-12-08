@@ -11,14 +11,16 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
     //State: Functional
     //This code represents an item drag handler that receive some BuiltIn unity mouse events interfaces that enables the use of the mouse as an very active input, this class handle the drag start, persistent drag and the drag end.
 
-    private Image    _image => GetComponent<Image>();
-    private Transform parentSave = null;
+    private Image               _image          => GetComponent<Image>();
+    private InventoryController _invController  = null;
+    private Transform           _parentSave     = null;
 
     [HideInInspector] public ItemSlot _currentSlot = null;
 
-    private void OnEnable() //-> Method called when the item is seted to enable
+    private void Start()
     {
-        _currentSlot = GetComponentInParent<ItemSlot>();
+        _currentSlot    = GetComponentInParent<ItemSlot>();
+        _invController  = GetComponentInParent<ControllerTopDown>().invController;
     }
 
     // ----------------------------------------------------------------------
@@ -34,8 +36,8 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
          */
 
         _image.raycastTarget = false;
-        parentSave = transform.parent;
-        transform.SetParent(transform.root);
+        _parentSave = GetComponentInParent<ItemSlot>().transform;
+        transform.SetParent(GetComponentInParent<Canvas>().transform);
 
         if (_currentSlot.item is EquipableItem)
         {
@@ -43,6 +45,8 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
             EquipableItem clothItem = (EquipableItem)_currentSlot.item;
             PaperdollController.Instance.DequipCloth(clothItem);
         }
+        if (_currentSlot.hasItem)
+            _invController.invetoryView.InspectItem(_currentSlot);
     }
 
     // ----------------------------------------------------------------------
@@ -62,7 +66,7 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
     public void OnEndDrag(PointerEventData eventData) //Method called every time that the mouse pointer ends and drag action in the object.
     {
         //In the method the item will return to his original position and the raycastTarget property is turned again to true.
-        transform.SetParent(parentSave);
+        transform.SetParent(_parentSave);
         _image.raycastTarget        = true;
         transform.localPosition     = Vector2.zero;
     }
@@ -76,6 +80,6 @@ public class HandlerItemDrag : MonoBehaviour, IDragHandler, IEndDragHandler, IBe
         //TODO -> Item inspection 
 
         if (_currentSlot.hasItem)
-            GameController.Instance._inventoryController._invetoryView.InspectItem(_currentSlot.item);
+            _invController.invetoryView.InspectItem(_currentSlot);
     }
 }

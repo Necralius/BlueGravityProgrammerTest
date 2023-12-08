@@ -15,6 +15,8 @@ public class Item : ScriptableObject
     [TextArea] public string Description   = "ItemDescription"; 
     public Sprite Icon          = null;
 
-    [Range(10, 1000)] public int SellCost = 10;
-    [Range(10, 1000)] public int BuyCost = 10;
+    [Range(10, 1000)] public int SellCost   = 10;
+    [Range(10, 1000)] public int BuyCost    = 10;
+
+    //[HideInInspector] public ItemSlot slotSave = null;
 }

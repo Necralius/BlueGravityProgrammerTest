@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -10,8 +8,8 @@ public class InteractionModel : MonoBehaviour
     private CircleCollider2D _col => GetComponent<CircleCollider2D>();
 
     //Interactions Actions
-    [SerializeField] private UnityAction _onInteractionStart    = null;
-    [SerializeField] private UnityAction _onInteractionEnd      = null;
+    [SerializeField] private UnityEvent _onInteractionStart    = null;
+    [SerializeField] private UnityEvent _onInteractionEnd      = null;
 
     [Header("Interaction Settings")]
     [SerializeField] private float _interactionRadius = 2f;

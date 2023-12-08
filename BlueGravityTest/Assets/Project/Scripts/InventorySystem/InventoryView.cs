@@ -1,14 +1,12 @@
+using NekraliusDevelopmentStudio;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class InventoryView : MonoBehaviour, IPointerClickHandler
+public class InventoryView : MonoBehaviour
 {
-    #region - Singleton Pattern -
-    public static InventoryView Instance;
-    private void Awake() => Instance = this;
-    #endregion
+    private InventoryController _inventoryController = null;
 
     [Header("Item Inspection")]
     [SerializeField] private Image              itemImage       = null;
@@ -16,10 +14,18 @@ public class InventoryView : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TextMeshProUGUI    itemDescription = null;
     [SerializeField] private TextMeshProUGUI    itemPrice       = null;
     [SerializeField] private Item               selectedItem    = null;
+    [SerializeField] private ItemSlot           selectedItemSlot = null;
+    [SerializeField] private Sprite             nullItemSprt    = null;
 
-    public void InspectItem(Item itemToInspect)
+    private void Start()
     {
-        selectedItem            = itemToInspect;
+        _inventoryController    = GetComponent<InventoryController>();
+    }
+
+    public void InspectItem(ItemSlot slotSave)
+    {
+        selectedItem            = slotSave.item;
+        selectedItemSlot        = slotSave;
 
         itemImage.sprite        = selectedItem.Icon;
         itemName.text           = selectedItem.Name;
@@ -29,33 +35,43 @@ public class InventoryView : MonoBehaviour, IPointerClickHandler
 
     public void RemoveInspectionItem()
     {
-        itemImage.sprite    = null;
-        itemImage.color     = new Color(255, 255, 255, 0);
+        itemImage.sprite        = nullItemSprt;
 
-        itemName.text           = "Item Name";
+        itemName.text           = "Inspected Item Name";
         itemDescription.text    = "Item Description";
-        itemPrice.text          = "Price";
+        itemPrice.text          = "Item Price";
     }
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        RemoveInspectionItem();
-        if (eventData.selectedObject != null && eventData.selectedObject.CompareTag("ItemSlot"))
-        {
-            if (eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot.hasItem)
-                InspectItem(eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot.item);
-        }
-    }
+    //public void OnPointerClick(PointerEventData eventData)
+    //{
+    //    RemoveInspectionItem();
+    //    if (eventData.selectedObject != null && eventData.selectedObject.CompareTag("ItemSlot"))
+    //    {
+    //        if (eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot.hasItem)
+    //            InspectItem(eventData.selectedObject.GetComponent<HandlerItemDrag>()._currentSlot);
+    //    }
+    //}
 
     public void RemoveItem()
     {
-        
+        if (selectedItem != null)
+        {
+            if (selectedItem is EquipableItem)
+                _inventoryController.playerInstance.paperDoll.DequipCloth(selectedItem as EquipableItem);
+
+            _inventoryController.RemoveItem(selectedItemSlot);
+        }
     }
 
-    public void EquipItem()
+    public void EquipOrUseItem()
     {
         if (selectedItem != null)
+        {
             if (selectedItem is EquipableItem) 
-                PaperdollController.Instance.EquipCloth(selectedItem as EquipableItem);
+                _inventoryController.playerInstance.paperDoll.EquipCloth(selectedItem as EquipableItem);
+
+            if (selectedItem is ConsumableItem)
+                _inventoryController.playerInstance.aspects.ConsumeItem(selectedItem as ConsumableItem);
+        }
     }
 }
